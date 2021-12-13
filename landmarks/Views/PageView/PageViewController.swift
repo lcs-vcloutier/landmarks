@@ -12,6 +12,8 @@ import UIKit
 // The page view controller stores an array of Page instances, which must be a type of View. These are the pages you use to scroll between landmarks.
 struct PageViewController<Page: View>: UIViewControllerRepresentable {
     var pages: [Page]
+    @Binding var currentPage: Int
+
     
     // SwiftUI calls this makeCoordinator() method before makeUIViewController(context:), so that you have access to the coordinator object when configuring your view controller.
     func makeCoordinator() -> Coordinator {
@@ -31,7 +33,7 @@ struct PageViewController<Page: View>: UIViewControllerRepresentable {
     // create the UIHostingController that hosts the page SwiftUI view on every update.
     func updateUIViewController(_ pageViewController: UIPageViewController, context: Context) {
         pageViewController.setViewControllers(
-            [context.coordinator.controllers[0]], direction: .forward, animated: true)
+            [context.coordinator.controllers[currentPage]], direction: .forward, animated: true)
     }
     
     // A SwiftUI view that represents a UIKit view controller can define a Coordinator type that SwiftUI manages and provides as part of the representable view’s context.
