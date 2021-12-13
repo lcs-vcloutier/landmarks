@@ -13,6 +13,10 @@ final class ModelData: ObservableObject {
     // Hikes are not @Published because you want have to modify it
     var hikes: [Hike] = load("hikeData.json")
     
+    var features: [Landmark] {
+        landmarks.filter { $0.isFeatured }
+    }
+    
     var categories: [String: [Landmark]] {
         Dictionary(
             grouping: landmarks,
